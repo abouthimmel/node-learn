@@ -1,8 +1,12 @@
-const cetakNama = require('./coba');
+// const fs = require('fs'); // core module 
+// const cetakNama = require('./coba'); // local module
+// const NPM = require('NPM'); //Third Party Module atau NPM akan tersimpan di dalam folder node/modules
+
+
 
 // memanggil file lain
+const cetakNama = require('./coba')
 require('./coba');
-
 console.log('hallo dunia');
 
 console.log(cetakNama('mulya'))
