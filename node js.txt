@@ -1,0 +1,25 @@
+Apa itu modules?
+    sekumpulan kode yg dapat di gunakan kembali, dengan antarmuka yg terdefinisi
+
+node modules?
+    Fungsionalitas yg simpel ataupun kompleks yg tersimpan di dalam sebuah file javasript
+    , yg dapat kita gunakan kembali pada aplikasi node js.
+
+    setiap modules di dalam node js memiliki konteks nya masing-masing, tidak bisa saling 
+    bercampur dengan modul lain pada lingkup global.
+
+tipe tipe modules pada node js
+    1. Core Modules
+        Modul yg sudah di siapkan oleh node, tinggal require
+    2. Local Modulse
+        Modul yg kita buat sendiri, kita yg ekspor dan require
+    3. Third Party Modules
+        Modul yg di buat oleh orang lain, Kita tinggal require
+
+        (selengkapnya ada di = https://nodejs.org/api/modules.html)
+
+require()
+    Fungsi require mencari modul dengan urutan sebagai berikut:
+        1. Core Modules
+        2. File atau direktori (./ atau / atau ../)
+        3. Folder `node_modules`
