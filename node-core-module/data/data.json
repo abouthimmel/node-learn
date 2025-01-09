@@ -1,1 +1,20 @@
-[{"nama":"mulya","noHp":"12121"},{"nama":"adysaaa","noHp":"21212"}]
+[
+  {
+    "nama": "Mulya Ramadhan",
+    "univ": "Andalas",
+    "jurusan": "Teknik Informatika",
+    "semester": "2"
+  },
+  {
+    "nama": "Adysa Azzahra",
+    "univ": "Universitas Ahmad Dahlan",
+    "jurusan": "Kesehatan Masyarakat",
+    "semester": "2"
+  },
+  {
+    "nama": "Elang Abdurraziq Matondang",
+    "univ": "Andalas",
+    "jurusan": "Sosiologi",
+    "semester": "2"
+  }
+]

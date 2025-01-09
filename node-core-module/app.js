@@ -1,6 +1,8 @@
 // core module
 // file system
+const { setEngine } = require('crypto');
 const fs = require('fs');
+const { Readline } = require('readline/promises');
 
 // menuliskan string ke file (synchronus)
 // try{
@@ -69,29 +71,115 @@ const fs = require('fs');
 // main()
 
 
+
+
 // memasukan input dari console ke dalam file json
-const {createInterface} = require('node:readline/promises')
+
+// // modul untuk menamgbil input dari pengguna secara interaktif
+// const {createInterface} = require('node:readline/promises');
+// // membuat antarmuka untuk input dari terminal
+// const rl = createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
+
+// // asynchronus function, bisa menggunakan await untuk menunggu hasil dari input
+// async function main(){
+//   try{ // mengambil input dari pengguna
+//   const nama = await rl.question('Masukan nama anda = ');
+//   const univ = await rl.question('Masukan nama universitas = ');
+//   const jurusan = await rl.question('Masukan jurusan anda = ');
+//   const semester = await rl.question('Masukan semester sekarang = ');
+
+//   // var mahasiswa di buat sebagai objek yg menyimpan input dari user
+//   const mahasiswa = {nama, univ, jurusan, semester};
+//   // membaca file json dalam bentuk teks
+//   const fileBuffer = fs.readFileSync('data/data.json');
+//   // mengubah teks json menjadi array js
+//   const strFile = JSON.parse(fileBuffer);
+//   // menambahkan objek mahasiswa (data baru) ke array strFile
+//   strFile.push(mahasiswa);
+//   // mengubah array (mahasiswa) kembali menjadi teks json
+//   // dan menyimpan data baru(yg sudah di tambahkan) ke dalam file data.json
+//   fs.writeFileSync('data/data.json', JSON.stringify(mahasiswa));
+//   } catch (err) {
+//     console.error(err);
+//   } finally {
+//     rl.close()
+//   }
+// }
+
+// main()
+
+
+// const {createInterface} = require('node:readline/promises');
+// const rl = createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
+
+// async function main() {
+//   try{
+//     const nama = await rl.question('Masukan nama anda = ');
+//     const univ = await rl.question('Masukan nama universitas anda = ');
+//     const jurusan = await rl.question('Masukan jurusan anda');
+//     const semester = await rl.question('Masukan semester anda = ');
+
+//     const mahasiswa = {nama, univ, jurusan, semester};
+//     const fileBuffer = fs.readFileSync('data/data.json', 'utf8');
+//     const newData = JSON.parse(fileBuffer);
+
+//    newData.push(mahasiswa);
+//    fs.writeFileSync('data/data.json', JSON.stringify(mahasiswa));
+    
+//   } catch (e) {
+//     console.error(e);
+//   } finally{
+//     rl.close()
+//   }
+// }
+
+// main()
+
+
+const { createInterface } = require('node:readline/promises'); // Modul untuk input pengguna
+
 const rl = createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-async function  main() {
-  try{
+async function main() {
+  try {
+    // Meminta input dari pengguna
     const nama = await rl.question('Masukan nama anda: ');
-    const noHp = await rl.question('Masukan noHp:   ');
+    const univ = await rl.question('Masukan universitas anda: ');
+    const jurusan = await rl.question('Masukan jurusan anda: ');
+    const semester = await rl.question('Masukan semester anda: ');
 
-    const contact = {nama, noHp};
-    const fileBuffer = fs.readFileSync('data/data.json', 'utf8');
-    const contacts = JSON.parse(fileBuffer);
-    contacts.push(contact)
+    // Membuat objek mahasiswa dari data input
+    const mahasiswa = { nama, univ, jurusan, semester };
 
-    fs.writeFileSync('data/data.json', JSON.stringify(contacts))
+    // Membaca file JSON dan memastikan selalu berupa array
+    let data = [];
+    try {
+      const fileContent = fs.readFileSync('data/data.json', 'utf8');
+      data = JSON.parse(fileContent); // Mengubah JSON menjadi array
+    } catch (err) {
+      console.log('File belum ada atau kosong, akan dibuat baru.');
+    }
+
+    // Menambahkan data baru ke array
+    data.push(mahasiswa);
+
+    // Menyimpan array ke file JSON
+    fs.writeFileSync('data/data.json', JSON.stringify(data, null, 2));
+    console.log('Data berhasil disimpan!');
   } catch (err) {
-    console.log(err)
-  } finally{
-    rl.close();
+    console.error('Terjadi kesalahan:', err.message);
+  } finally {
+    rl.close(); // Menutup interface readline
   }
 }
 
-main()
+main();
