@@ -29,14 +29,69 @@ const fs = require('fs');
 //     console.log(data)
 // }
 
-const { createInterface } = require('node:readline/promises');
+// const { createInterface } = require('node:readline/promises');
+// const rl = createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
+
+// rl.question('Siapa namamu? ')
+//   .then((nama) => {
+//     console.log(`Halo, ${nama}!`);
+//   })
+//   .finally(() => rl.close()); 
+// memasukan input di console dari user, dan di callback
+
+
+
+
+// jika ingin ada 2 pertanyaan atau lebih di console
+// const readline = require('node:readline/promises');
+
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
+
+// async function main() {
+//   try{
+//     const nama = await rl.question('Masukan nama anda: ');
+//     const saldo = await rl.question('Masukan saldo anda: ');
+
+//     console.log(`halo ${nama}, saldo anda RP ${saldo}`);
+//   } catch (err) {
+//     console.log(err);
+//   } finally {
+//     rl.close();
+//   }
+// }
+
+// main()
+
+
+// memasukan input dari console ke dalam file json
+const {createInterface} = require('node:readline/promises')
 const rl = createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-rl.question('Siapa namamu? ')
-  .then((nama) => {
-    console.log(`Halo, ${nama}!`);
-  })
-  .finally(() => rl.close());
+async function  main() {
+  try{
+    const nama = await rl.question('Masukan nama anda: ');
+    const noHp = await rl.question('Masukan noHp:   ');
+
+    const contact = {nama, noHp};
+    const fileBuffer = fs.readFileSync('data/data.json', 'utf8');
+    const contacts = JSON.parse(fileBuffer);
+    contacts.push(contact)
+
+    fs.writeFileSync('data/data.json', JSON.stringify(contacts))
+  } catch (err) {
+    console.log(err)
+  } finally{
+    rl.close();
+  }
+}
+
+main()
