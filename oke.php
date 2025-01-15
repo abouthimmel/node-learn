@@ -1,57 +1,1062 @@
 <?php
-// Inisialisasi sesi untuk menyimpan data daftar tugas
 session_start();
 
-if (!isset($_SESSION['tasks'])) {
-    $_SESSION['tasks'] = [];
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
 }
 
-// Menambahkan tugas
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['task'])) {
-    $task = htmlspecialchars($_POST['task']); // Menghindari XSS
-    $_SESSION['tasks'][] = $task;
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
 }
 
-// Menghapus tugas berdasarkan indeks
-if (isset($_GET['delete'])) {
-    $index = $_GET['delete'];
-    if (isset($_SESSION['tasks'][$index])) {
-        array_splice($_SESSION['tasks'], $index, 1);
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
     }
+    exit;
 }
 
-// Reset semua tugas
-if (isset($_GET['reset'])) {
-    $_SESSION['tasks'] = [];
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>To-Do List PHP</title>
-</head>
-<body>
-    <div class="container">
-        <h1>To-Do List</h1>
-        <form method="POST" action="todo.php">
-            <input type="text" name="task" placeholder="Tambahkan tugas baru..." required>
-            <button type="submit">Tambah</button>
-        </form>
+<?php
+session_start();
 
-        <ul class="task-list">
-            <?php foreach ($_SESSION['tasks'] as $index => $task): ?>
-                <li>
-                    <?= $task ?>
-                    <a href="todo.php?delete=<?= $index ?>" class="delete">Hapus</a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
 
-        <a href="todo.php?reset=true" class="reset">Reset Semua</a>
-    </div>
-</body>
-</html>
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>
+<?php
+session_start();
+
+if (!isset($_SESSION['products'])) {
+    $_SESSION['products'] = [];
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Menambah produk baru
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addProduct') {
+    $product = [
+        'id' => uniqid(),
+        'name' => htmlspecialchars($_POST['name']),
+        'price' => (float)$_POST['price'],
+        'stock' => (int)$_POST['stock']
+    ];
+    $_SESSION['products'][] = $product;
+    echo json_encode(["message" => "Produk berhasil ditambahkan", "product" => $product]);
+    exit;
+}
+
+// Menghapus produk
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteProduct') {
+    $id = $_POST['id'];
+    $_SESSION['products'] = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] !== $id;
+    });
+    echo json_encode(["message" => "Produk berhasil dihapus"]);
+    exit;
+}
+
+// Mengambil semua produk
+if (isset($_GET['action']) && $_GET['action'] === 'getProducts') {
+    echo json_encode($_SESSION['products']);
+    exit;
+}
+
+// Menambah ke keranjang
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === 'addToCart') {
+    $id = $_POST['id'];
+    $product = array_filter($_SESSION['products'], function ($product) use ($id) {
+        return $product['id'] === $id;
+    });
+    $product = array_values($product);
+
+    if (count($product) > 0 && $product[0]['stock'] > 0) {
+        $cartItem = &$product[0];
+        $cartItem['stock'] -= 1;
+        $_SESSION['cart'][] = $cartItem;
+
+        echo json_encode(["message" => "Produk berhasil ditambahkan ke keranjang"]);
+    } else {
+        echo json_encode(["error" => "Produk habis stok"]);
+    }
+    exit;
+}
+
+// Mendapatkan keranjang belanja
+if (isset($_GET['action']) && $_GET['action'] === 'getCart') {
+    echo json_encode($_SESSION['cart']);
+    exit;
+}
+?>

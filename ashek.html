@@ -3,26 +3,990 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
     <link rel="stylesheet" href="style.css">
-    <title>To-Do List</title>
 </head>
 <body>
-    <div class="container">
-        <h1>To-Do List</h1>
-        <form>
-            <input type="text" placeholder="Tambahkan tugas baru...">
-            <button>Tambah</button>
-        </form>
-        <ul>
-            <li>
-                Belajar PHP
-                <button class="delete">Hapus</button>
-            </li>
-            <li>
-                Membuat website
-                <button class="delete">Hapus</button>
-            </li>
-        </ul>
-    </div>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Toko Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Manajemen Toko Online</h1>
+    </header>
+
+    <main>
+        <section id="addProduct">
+            <h2>Tambah Produk Baru</h2>
+            <form id="addProductForm">
+                <input type="text" id="productName" placeholder="Nama Produk" required>
+                <input type="number" id="productPrice" placeholder="Harga Produk" required>
+                <input type="number" id="productStock" placeholder="Stok Produk" required>
+                <button type="submit">Tambah Produk</button>
+            </form>
+        </section>
+
+        <section id="productList">
+            <h2>Daftar Produk</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cart">
+            <h2>Keranjang Belanja</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="cartTableBody">
+                    <!-- Data akan dimuat melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
