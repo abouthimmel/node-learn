@@ -1,0 +1,24 @@
+{
+  "name": "npm-learn",
+  "version": "1.0.0",
+  "description": "Belajar npm",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main",
+    "bebas": "dir",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mulya",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "validator": "^13.12.0"
+  },
+  "ini adalah komentar": "bisa menambahkan di scripts nya, seperti ada start",
+  "ini adalah komentar2": "cara menjalankannya dengan ketik (npm start) di console",
+  "ini adalah komentar3": "lalu bisa memmbuat key nya sendiri, contohnya kayak bebas yg menjalankan perintah dir",
+  "ini adalah komentar4": "jika ingin menginstall package nya, ketik npm i (nama package) di console",
+  "ini adalah komentar5": "jika ingin menguninstall nya, ketik npm uinstall (nama package) di console",
+  "ini adalah komentar6": "jika ingin menginstall dengan versi yg kita mau, tambahkan atribut @(100.100.100)",
+  "ini adalah komentar7": "di belakanggnya, contoh (npm install validator@13.5.2) di console"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "learn-yargs",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mulya",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "validator": "^13.12.0",
+    "yargs": "^16.2.0"
+  }
+}
