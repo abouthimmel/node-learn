@@ -18,5 +18,25 @@
     "email": "adysaazzahra@gmail.com",
     "noHp": "08987654321",
     "nim": 5201937
+  },
+  {
+    "nama": "Budi hartono",
+    "gender": "Pria",
+    "jurusan": "Teknik Lingkungan",
+    "sks": 22,
+    "semester": 5,
+    "email": "budigaming@gmail.com",
+    "noHp": "081798325437",
+    "nim": 5212231
+  },
+  {
+    "nama": "Fakhri anjay",
+    "gender": "Pria",
+    "jurusan": "Teknik Industri",
+    "sks": 22,
+    "semester": 5,
+    "email": "fakhrigimang@gmail.com",
+    "noHp": "081798332517",
+    "nim": 524121
   }
 ]
