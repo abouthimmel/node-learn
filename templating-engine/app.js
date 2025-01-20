@@ -8,20 +8,27 @@ const fs = require('fs/promises')
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  const mahasiswa = [
+    {
+      nama: 'Mulya ramadhan',
+      email: 'mulyaranadhan@gmail.com'
+    },
+    {
+      nama: 'Sandhika Galih',
+      email: 'sandhikagalih@gmail.com'
+    },
+    {
+      nama: 'Elang Abdurraziq Matondang',
+      email: 'elangabdurraziqmatondang@gmail.com'
+    },
+  ]
+  res.render('index', { nama : "Mulya Ramadhan", title: "Main page", mahasiswa});
 })
 
-app.get('/contact', async (req, res) => {
-  try{
-    const data = await fs.readFile('contact.html', 'utf8');
-    res.send(data);
-  } catch (e) {
-    console.error(e);
-    res.status(500).send('Interval Server Error')
-  }
+app.get('/contact', (req, res) => {
+  res.render('contact');
 })
 
-// membaca dari file index html lain
 app.get('/about', async(req, res) => {
   try{
     const data = await fs.readFile('about.html', 'utf8');
