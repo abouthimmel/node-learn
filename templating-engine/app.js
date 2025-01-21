@@ -29,14 +29,8 @@ app.get('/contact', (req, res) => {
   res.render('contact');
 })
 
-app.get('/about', async(req, res) => {
-  try{
-    const data = await fs.readFile('about.html', 'utf8');
-    res.send(data)
-  } catch (e) {
-    console.error(e);
-    res.status(500).send('Interval Server Error')
-  }
+app.get('/about', (req, res) => {
+  res.render('about');
 })
 
 // mengirimkan dara berformat json
