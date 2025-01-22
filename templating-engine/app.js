@@ -1,11 +1,24 @@
 const express = require('express')
+const expressLayouts = require('express-ejs-layouts')
 const app = express()
 const port = 3000
 const fs = require('fs/promises')
+const { title } = require('process')
 
 
 // gunakan ejs
 app.set('view engine', 'ejs');
+app.use(expressLayouts)
+
+app.use((req, res, next) => {
+  console.log('Time : ', Date.now());
+  next()
+})
+
+app.use((req, res, next) => {
+  console.log('Ini adalah middleware');
+  next()
+})
 
 app.get('/', (req, res) => {
   const mahasiswa = [
@@ -22,15 +35,26 @@ app.get('/', (req, res) => {
       email: 'elangabdurraziqmatondang@gmail.com'
     },
   ]
-  res.render('index', { nama : "Mulya Ramadhan", title: "Main page", mahasiswa});
+  res.render('index', {
+    nama : 'mulya ramadhan',
+    title : 'Main page',
+    layout : 'layouts/main-layout',
+    mahasiswa
+  });
 })
 
 app.get('/contact', (req, res) => {
-  res.render('contact');
+  res.render('contact', {
+    title: 'contact page',
+    layout : 'layouts/main-layout'
+  });
 })
 
 app.get('/about', (req, res) => {
-  res.render('about');
+  res.render('about', {
+    title: 'about page',
+    layout : 'layouts/main-layout'
+  });
 })
 
 // mengirimkan dara berformat json
